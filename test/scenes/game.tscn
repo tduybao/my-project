@@ -1,0 +1,101 @@
+[gd_scene load_steps=9 format=4 uid="uid://de8alyaiw1xo6"]
+
+[ext_resource type="PackedScene" uid="uid://nr1myotacn47" path="res://scenes/player.tscn" id="1_dj5pd"]
+[ext_resource type="Texture2D" uid="uid://xnw60fgxs0ns" path="res://assets/Mossy Assets/Mossy Tileset/Mossy - FloatingPlatforms.png" id="2_5acm0"]
+[ext_resource type="Texture2D" uid="uid://bwxabe0ts2t7g" path="res://assets/Mossy Assets/Mossy Tileset/Mossy - TileSet.png" id="3_uufn5"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xcd3m"]
+distance = 452.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tdf3s"]
+texture = ExtResource("2_5acm0")
+texture_region_size = Vector2i(253, 253)
+2:2/next_alternative_id = 2
+2:2/0 = 0
+2:2/1 = 1
+3:2/next_alternative_id = 2
+3:2/0 = 0
+3:2/1 = 1
+5:2/next_alternative_id = 2
+5:2/0 = 0
+5:2/1 = 1
+4:2/next_alternative_id = 2
+4:2/0 = 0
+4:2/1 = 1
+
+[sub_resource type="TileSet" id="TileSet_7bbid"]
+tile_size = Vector2i(253, 253)
+sources/1 = SubResource("TileSetAtlasSource_tdf3s")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7opsh"]
+texture = ExtResource("3_uufn5")
+texture_region_size = Vector2i(200, 200)
+2:3/next_alternative_id = 3
+2:3/0 = 0
+2:3/2 = 2
+1:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_1t7mw"]
+tile_size = Vector2i(200, 200)
+sources/0 = SubResource("TileSetAtlasSource_7opsh")
+
+[node name="Game" type="Node2D"]
+position = Vector2(3, 3)
+
+[node name="Player" parent="." instance=ExtResource("1_dj5pd")]
+z_index = 1
+position = Vector2(-2223, 39)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(-8, 134)
+scale = Vector2(100, 100)
+zoom = Vector2(0.7, 0.7)
+limit_smoothed = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-1676, 740)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-543, 88)
+scale = Vector2(0.5, 0.5)
+shape = SubResource("WorldBoundaryShape2D_xcd3m")
+
+[node name="Walkable Surface" type="TileMap" parent="."]
+position = Vector2(-179, 273)
+scale = Vector2(0.3, 0.3)
+format = 2
+
+[node name="ground" type="TileMap" parent="Walkable Surface"]
+position = Vector2(596.667, -910)
+scale = Vector2(3.33333, 3.33333)
+tile_set = SubResource("TileSet_7bbid")
+format = 2
+
+[node name="horizontal ground" type="TileMapLayer" parent="Walkable Surface/ground"]
+z_index = 2
+use_parent_material = true
+position = Vector2(-179, 273)
+scale = Vector2(0.3, 0.3)
+tile_map_data = PackedByteArray("AADk/wQAAQADAAIAAQDl/wQAAQADAAIAAQDm/wQAAQADAAIAAQDn/wQAAQADAAIAAQDo/wQAAQADAAIAAQDp/wQAAQADAAIAAQDq/wQAAQADAAIAAQDr/wQAAQADAAIAAQDs/wQAAQADAAIAAQDt/wQAAQADAAIAAQDu/wQAAQADAAIAAQDj/wQAAQACAAIAAQDv////AQADAAIAAQDw////AQADAAIAAQDx////AQADAAIAAQDy////AQADAAIAAQDz////AQADAAIAAQD0////AQADAAIAAQD1////AQADAAIAAQD2////AQADAAIAAQD3////AQADAAIAAQD4////AQADAAIAAQD5////AQADAAIAAQD6////AQADAAIAAQD7////AQADAAIAAQD8////AQADAAIAAQA=")
+tile_set = SubResource("TileSet_7bbid")
+
+[node name="vertical ground" type="TileMapLayer" parent="Walkable Surface/ground"]
+z_index = 2
+use_parent_material = true
+position = Vector2(-150.4, 302)
+scale = Vector2(0.3, 0.3)
+tile_map_data = PackedByteArray("AADu/wMAAQADAAIAAWDu/wIAAQADAAIAAWDu/wEAAQADAAIAAWDu/wAAAQADAAIAAWDu////AQACAAIAAUA=")
+tile_set = SubResource("TileSet_7bbid")
+
+[node name="TileMap" type="TileMap" parent="Walkable Surface"]
+format = 2
+
+[node name="background" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_1t7mw")
+format = 2
+
+[node name="Layer1" type="TileMapLayer" parent="background"]
+modulate = Color(0.0366347, 0.120563, 0.190104, 1)
+use_parent_material = true
+tile_map_data = PackedByteArray("AACy/xQAAAACAAMAAAA=")
+tile_set = SubResource("TileSet_1t7mw")
